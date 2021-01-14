@@ -11,3 +11,6 @@
 
 ### List
 [list_for_each](https://blog.csdn.net/haozhao_blog/article/details/25603901)
+
+### C
+[C Pointer](https://openhome.cc/Gossip/CGossip/Pointer.html)
