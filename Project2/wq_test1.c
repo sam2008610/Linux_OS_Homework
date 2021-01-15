@@ -8,22 +8,23 @@
 #include<linux/kernel.h>
 #include<linux/list.h>
 
-static int __init queue_test(void)
+static int queue_test_init (void)
 {
 
     DECLARE_WAIT_QUEUE_HEAD(queue);
     DECLARE_WAITQUEUE(project_queue1,NULL);
     print("The wait queue is in %016llx",&project_queue1);
     add_wait_queue(&queue, &project_queue1);
+    
     list_for_each(task_list *pos,queue->task_list){
-        print("The wait queue is in %016llx",&pos);
+        printk("The wait queue is in %016llx",&pos);
     }
 
 }
-static void __exit v2p_exit(void)
+static void queue_test_exit(void)
 {
 	printk(KERN_INFO "Cleaning up.\n");
 }
 MODULE_LICENSE("GPL"); //許可證
-module_init(queue_test);//核心入口函式
-module_exit(queue_test);//核心出口函式
+module_init(queue_test_init);//核心入口函式
+module_exit(queue_test_exit);//核心出口函式
