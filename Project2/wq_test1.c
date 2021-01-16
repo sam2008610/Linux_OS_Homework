@@ -13,7 +13,7 @@ static int queue_test_init (void)
 
     DECLARE_WAIT_QUEUE_HEAD(queue);
     DECLARE_WAITQUEUE(project_queue1,NULL);
-    print("The wait queue is in %016llx",&project_queue1);
+    printk("The wait queue is in %016llx",&project_queue1);
     add_wait_queue(&queue, &project_queue1);
     
     list_for_each(task_list *pos,queue->task_list){
