@@ -17,3 +17,6 @@
 [Timeval](https://fantasymew.pixnet.net/blog/post/35048123)<br> 
 [char copy & char cat](https://openhome.cc/Gossip/CGossip/StringLengthCopyCat.html)<br> 
 
+### Shell
+[Background-process](https://unix.stackexchange.com/questions/104821/how-to-terminate-a-background-process)
+[Wait](https://blog.gtwang.org/programming/bash-tutorial-parallel-subprocesses-and-wait/)
