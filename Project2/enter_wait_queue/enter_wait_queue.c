@@ -1,34 +1,37 @@
-#include<linux/wait.h>
-#include<linux/kernel.h>
-#include<linux/list.h>
+#include <linux/wait.h>
+#include <linux/kernel.h>
+#include <linux/list.h>
 #include <linux/sched.h>
-#include<linux/queue_wait_variable.h>
+
+#ifndef Queue_head_define
+#define Queue_head_define
+wait_queue_head_t project_queue1 = __WAIT_QUEUE_HEAD_INITIALIZER(project_queue1);
+wait_queue_head_t project_queue2 = __WAIT_QUEUE_HEAD_INITIALIZER(project_queue2);
+wait_queue_head_t project_queue3 = __WAIT_QUEUE_HEAD_INITIALIZER(project_queue3);
+#else
+extern wait_queue_head_t project_queue1 ;
+extern wait_queue_head_t project_queue2 ;
+extern wait_queue_head_t project_queue3 ;
+#endif
 
 asmlinkage int sys_enter_wait_queue(int x) {
-    DECLARE_WAIT_QUEUE_HEAD(project_queue1);
-    DECLARE_WAIT_QUEUE_HEAD(project_queue2);
-    DECLARE_WAIT_QUEUE_HEAD(project_queue3);
-    
-    if(x ==1)
+    if(x == 1)
     {        
-    	bool q1=false;
-	DECLARE_WAITQUEUE(wait1,current);
-        add_wait_queue(&project_queue1, &wait1);
-        wait_event_interruptible(project_queue1,q1);
-    }
+        DEFINE_WAIT(wait1);
+        prepare_to_wait(&project_queue1, &wait1, TASK_INTERRUPTIBLE);
+        schedule();
+	}
     else if(x == 2)
     {
-	    bool q2=false;       
-	DECLARE_WAITQUEUE(wait2,current);
-        add_wait_queue(&project_queue2, &wait2);
-        wait_event_interruptible(project_queue2,q2);
+        DEFINE_WAIT(wait2);
+        prepare_to_wait(&project_queue2, &wait2, TASK_INTERRUPTIBLE);
+        schedule();
     }
     else
     {
-	    bool q3=false;       
-	DECLARE_WAITQUEUE(wait3,current);
-        add_wait_queue(&project_queue3, &wait3);
-        wait_event_interruptible(project_queue3,q3);
+        DEFINE_WAIT(wait3);
+        prepare_to_wait(&project_queue3, &wait3, TASK_INTERRUPTIBLE);
+        schedule();
     }       
 
     return 1;
