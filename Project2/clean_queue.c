@@ -9,6 +9,7 @@
 
 void main()
 {
+    // initialize
     int random_num1, random_num2;
     int ttid, count;
     char str[300];
@@ -16,8 +17,8 @@ void main()
     FILE *pFile;
 
     struct timeval t1, t2;
-
     gettimeofday(&t1, NULL);
+
     ttid = syscall(SYS_gettid);
     count = 0;
 
@@ -42,7 +43,7 @@ void main()
     strcat(file_gettid, file);
     strcat(file_gettid, tid);
 
-    // write file
+    // open file
     pFile = fopen(file_gettid,"a+");
 
     while (1)
@@ -50,7 +51,7 @@ void main()
         gettimeofday(&t2, NULL);
 
         // condition
-        if(t2.tv_sec - t1.tv_sec >= 20)
+        if(t2.tv_sec - t1.tv_sec >= 300)
             break;
         
         // content
@@ -60,27 +61,25 @@ void main()
 
         sprintf(str, "Wake up all processes in wait queue project2_queue_%d at time ...\n", random_num1);
 
+        // write file
+        fwrite(str,1,strlen(str),pFile);
 
-        fprintf(pFile,"%s",str);
-
-        // add wq
+        // clean wq
         syscall(323, random_num1);
-        printf("1");
     }
+
+    // close
     strcpy(str,  "Clean wait wait queue project2_queue_1\n");
-    fprintf(pFile,"%s",str);
+    fwrite(str,1,strlen(str),pFile);
     syscall(323, 1);
-    printf("2");
     
     strcpy(str,  "Clean wait wait queue project2_queue_2\n");
-    fprintf(pFile,"%s",str);
+    fwrite(str,1,strlen(str),pFile);
     syscall(323, 2);
-    printf("3");
     
     strcpy(str,  "Clean wait wait queue project2_queue_3\n");
-    fprintf(pFile,"%s",str);
+    fwrite(str,1,strlen(str),pFile);
     syscall(323, 3);
-    printf("4");
     
     fclose(pFile);
     printf("process %d completes!\n", ttid);
